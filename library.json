@@ -63,6 +63,9 @@
             "path": "lib/codemirror.css"
         },
         {
+            "path": "codemirror.css"
+        },
+        {
             "path": "addon/fold/foldgutter.css"
         },
         {
