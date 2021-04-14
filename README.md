@@ -6,6 +6,8 @@ The folder `addon`, `keymap`, `lib`, and `mode` are from the CodeMirror reposito
 
 The `codemirror.css` and `codemirror.js` at the root are custom file.
 
+### codemirror.js
+
 The `codemirror.js` add some usefull function :
 
 - `CodeMirror.H5P.encode` and `CodeMirror.H5P.decode` are utility function required to avoid issues with xss protection of h5p
