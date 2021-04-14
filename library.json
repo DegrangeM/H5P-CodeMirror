@@ -55,6 +55,9 @@
             "path": "addon/display/fullscreen.js"
         },
         {
+            "path": "addon/edit/matchtags.js"
+        },
+        {
             "path": "addon/hint/show-hint.js"
         }
     ],
