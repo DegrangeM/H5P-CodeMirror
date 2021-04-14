@@ -32,7 +32,7 @@ CodeMirror.H5P = {
    * with the ENT_QUOTES flag and the doubleEncode parameter set to true
    * 
    * @param {string} str
-   * @returns {string}
+   * @returns {string}
    */
   encode: function (str) { // adapted from https://github.com/locutusjs/locutus/blob/master/src/php/strings/htmlspecialchars.js
     return str.replace(/&/g, '&amp;')
@@ -46,12 +46,12 @@ CodeMirror.H5P = {
    * php function with the ENT_QUOTES flag 
    * 
    * @param {string} str
-   * @returns {string}
+   * @returns {string}
    */
   decode: function (str) { // adapted from https://github.com/locutusjs/locutus/blob/master/src/php/strings/htmlspecialchars_decode.js
     return str.replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
-      .replace(/&#0*39;/g, "'")
+      .replace(/&#0*39;/g, '\'')
       .replace(/&quot;/g, '"')
       .replace(/&amp;/g, '&');
   },
@@ -68,12 +68,13 @@ CodeMirror.H5P = {
       let match = l.trim().match('^([0-9]+)(?:-([0-9]+))?$');
       if (match) {
         if (typeof match[2] === 'undefined') {
-          cm.addLineClass(parseInt(match[1]), 'background', 'CodeMirror-highlightedline')
-        } else {
+          cm.addLineClass(parseInt(match[1]), 'background', 'CodeMirror-highlightedline');
+        }
+        else {
           let start = Math.min(match[1], match[2]);
           let end = Math.max(match[1], match[2]);
           for (let i = start; i <= end; i++) {
-            cm.addLineClass(i, 'background', 'CodeMirror-highlightedline')
+            cm.addLineClass(i, 'background', 'CodeMirror-highlightedline');
           }
         }
       }
@@ -89,7 +90,7 @@ CodeMirror.H5P = {
    * @param {CodeMirror} cm
    * @param {string} mode Name of the language
    */
-  setLanguage = function (cm, mode) {
+  setLanguage: function (cm, mode) {
     if (mode === 'null') {
       cm.setOption('mode', null);
       return;
@@ -109,8 +110,9 @@ CodeMirror.H5P = {
           return H5P.getLibraryPath('CodeMirror-1.0') + '/mode/' + mode + '/' + mode + '.js';
         }
       });
-    } else {
+    }
+    else {
       cm.setOption('mode', null); // Set the language to null which will not apply any syntax highlighting.
     }
   }
-}
+};
