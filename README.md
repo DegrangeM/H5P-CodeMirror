@@ -10,6 +10,6 @@ The `codemirror.css` and `codemirror.js` at the root are custom files.
 
 The `codemirror.js` add some usefull function :
 
-- `CodeMirror.H5P.encode` and `CodeMirror.H5P.decode` are utility function required to avoid issues with xss protection of h5p
+- `CodeMirror.H5P.encode` and `CodeMirror.H5P.decode` are utility function that can be usefull to avoid issues with xss protection of h5p
 
 - `CodeMirror.H5P.highlightLines` allow to highlight some of the lines of the code
