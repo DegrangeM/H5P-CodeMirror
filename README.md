@@ -4,7 +4,7 @@ This H5P library is based on the [CodeMirror](https://github.com/codemirror/Code
 
 The folder `addon`, `keymap`, `lib`, and `mode` are from the CodeMirror repository and have been stripped of unused files.
 
-The `codemirror.css` and `codemirror.js` at the root are custom file.
+The `codemirror.css` and `codemirror.js` at the root are custom files.
 
 ### codemirror.js
 
