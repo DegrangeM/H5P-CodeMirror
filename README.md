@@ -1,6 +1,6 @@
 # H5P-CodeMirror
 
-This H5P library is based on the [CodeMirror](https://github.com/codemirror/CodeMirror) and can be reused by other H5P library like the [H5P.CodeHighlighter](https://github.com/DegrangeM/H5P.CodeHighlighter) content-type..
+This H5P library is based on the [CodeMirror](https://github.com/codemirror/CodeMirror) and can be reused by other H5P library like the [H5P.CodeHighlighter](https://github.com/DegrangeM/H5P.CodeHighlighter) content-type. It can't be used as itself.
 
 The folder `addon`, `keymap`, `lib`, and `mode` are from the CodeMirror repository and have been stripped of unused files.
 
