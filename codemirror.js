@@ -64,17 +64,18 @@ CodeMirror.H5P = {
    */
   highlightLines: function (cm, str) {
     let lines = str.split(',');
+    let firstLineNumber = cm.getOption('firstLineNumber');
     lines.forEach(function (l) {
       let match = l.trim().match('^([0-9]+)(?:-([0-9]+))?$');
       if (match) {
         if (typeof match[2] === 'undefined') {
-          cm.addLineClass(parseInt(match[1]), 'background', 'CodeMirror-highlightedline');
+          cm.addLineClass(parseInt(match[1] + firstLineNumber), 'background', 'CodeMirror-highlightedline');
         }
         else {
           let start = Math.min(match[1], match[2]);
           let end = Math.max(match[1], match[2]);
           for (let i = start; i <= end; i++) {
-            cm.addLineClass(i, 'background', 'CodeMirror-highlightedline');
+            cm.addLineClass(i + firstLineNumber, 'background', 'CodeMirror-highlightedline');
           }
         }
       }
