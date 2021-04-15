@@ -3,7 +3,7 @@
     "contentType": "library",
     "majorVersion": 1,
     "minorVersion": 0,
-    "patchVersion": 0,
+    "patchVersion": 1,
     "runnable": 0,
     "machineName": "CodeMirror",
     "author": "Mathieu Degrange - Library from Marijn Haverbeke and Other",
