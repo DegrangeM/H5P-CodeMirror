@@ -4,7 +4,7 @@
 }
 
 .CodeMirror-scroll {
-  height: auto;
+  height: inherit;
 }
 
 .CodeMirror-highlightedline {
