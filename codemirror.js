@@ -1,4 +1,11 @@
 CodeMirror.H5P = {
+  /**
+   * Return the library path to CodeMirror
+   * @returns {string}
+   */
+  getLibraryPath: function() {
+    return H5P.getLibraryPath('CodeMirror-1.0');
+  },
   /*
       By default, when a content-type fetch the value of a text field,
       H5P apply some sanitization to avoid xss injection.
@@ -108,12 +115,31 @@ CodeMirror.H5P = {
         // set the mode to the value passed in argument, this has
         // to be done before.
         path: function (mode) { // path is safe because mode is from modeInfo.mime
-          return H5P.getLibraryPath('CodeMirror-1.0') + '/mode/' + mode + '/' + mode + '.js';
+          return CodeMirror.H5P.getLibraryPath() + '/mode/' + mode + '/' + mode + '.js';
         }
       });
     }
     else {
       cm.setOption('mode', null); // Set the language to null which will not apply any syntax highlighting.
     }
+  },
+  /**
+   * Load the css file of a theme
+   * This does not apply the theme
+   * @param {string} name Name of the theme to load
+   */
+  loadTheme: function (name) {
+    if (name.indexOf('.') !== -1) return;
+
+    this.loadedThemes = this.loadedThemes || [];
+    if (this.loadedThemes.indexOf(name) !== -1) return;
+    this.loadedThemes.push(name);
+
+    let link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = CodeMirror.H5P.getLibraryPath() + '/theme/' + name + '.css';
+    
+    document.getElementsByTagName('head')[0].appendChild(link);
   }
 };
