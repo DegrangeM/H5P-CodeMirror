@@ -88,6 +88,17 @@ CodeMirror.H5P = {
       }
     });
   },
+    /**
+   * Append text at the end of the editor
+   * 
+   * @param {CodeMirror} cm
+   * @param {string} mode text to append
+   */
+  appendText: function(cm, text) {
+    let lastLine = cm.lastLine();
+    let lastCh = cm.getLine(lastLine).length;
+    cm.replaceRange(text, { line: lastLine, ch: lastCh }, { line: lastLine, ch: lastCh });
+  },
   /**
    * Set the editor language to mode.
    * The mode argument can either be a language name like "Python"
