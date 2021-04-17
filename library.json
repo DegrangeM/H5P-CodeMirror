@@ -59,6 +59,9 @@
         },
         {
             "path": "addon/hint/show-hint.js"
+        },
+        {
+            "path": "addon/runmode/runmode.js"
         }
     ],
     "preloadedCss": [
