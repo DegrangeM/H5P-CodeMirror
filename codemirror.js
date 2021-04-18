@@ -99,28 +99,41 @@ CodeMirror.H5P = {
     let lines = str.split(',');
     let firstLineNumber = cm.getOption('firstLineNumber');
     lines.forEach(function (l) {
-      let match = l.trim().match(/^([0-9]+)(?:\.([0-9]+))?(?:-([0-9]+)(?:\.([0-9]+))?)?$/);
+      /*
+        Examples :     2     2-4     2.3-4.5     ]2.3-4.5[
+        1: undefined or [ or ]
+        2: number
+        3: number or undefined
+        4: number or undefined
+        5: number or undefined
+        6: undefined or [ or ]
+      */
+      let match = l.trim().match(/^(\[|\])?([0-9]+)(?:\.([0-9]+))?(?:-([0-9]+)(?:\.([0-9]+))?(\[|\])?)?$/);
       if (match) {
-        if (typeof match[3] === 'undefined') {
+        if (typeof match[4] === 'undefined') {
           let start = { line: match[1] - firstLineNumber, ch: 0 };
           let end = { line: match[1] - firstLineNumber, ch: cm.getLine(start.line).length };
-          cm.markText(start, end, { readOnly: true });
+          cm.markText(start, end, { readOnly: true, inclusiveLeft: true, inclusiveRight: true });
         }
         else {
-          match[1] = parseInt(match[1]);
           match[2] = parseInt(match[2]);
-          match[3] = parseInt(match[3]);
+          match[3] = match[3] !== undefined ? parseInt(match[3]) : undefined;
           match[4] = parseInt(match[4]);
-          let start, end;
-          if (match[1] < match[3]) {
-            start = { line: match[1] - firstLineNumber, ch: match[2] || 0 };
-            end = { line: match[3] - firstLineNumber, ch: match[4] || cm.getLine(start.line).length };
+          match[5] = match[5] !== undefined ? parseInt(match[5]) : undefined;
+          let start, end, inclusiveLeft, inclusiveRight;
+          if (match[2] < match[4]) {
+            inclusiveLeft = match[3] === undefined ? true : !(match[1] === ']');
+            inclusiveRight = match[5] === undefined ? true : !(match[6] === '[');
+            start = { line: match[2] - firstLineNumber, ch: match[3] || 0 };
+            end = { line: match[4] - firstLineNumber, ch: match[5] || cm.getLine(start.line).length };
           }
           else {
-            start = { line: match[3] - firstLineNumber, ch: match[4] || 0 };
-            end = { line: match[1] - firstLineNumber, ch: match[2] || cm.getLine(start.line).length };
+            inclusiveLeft = match[5] === undefined ? true : !(match[6] === ']');
+            inclusiveRight = match[3] === undefined ? true : !(match[1] === '[');
+            start = { line: match[4] - firstLineNumber, ch: match[5] || 0 };
+            end = { line: match[2] - firstLineNumber, ch: match[3] || cm.getLine(start.line).length };
           }
-          cm.markText(start, end, { readOnly: true });
+          cm.markText(start, end, { readOnly: true, inclusiveLeft: inclusiveLeft, inclusiveRight: inclusiveRight });
         }
       }
     });
