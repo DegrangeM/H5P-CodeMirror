@@ -96,16 +96,15 @@ CodeMirror.H5P = {
    * to indicate range eventually with a dot for character position (e.g. 1,3,5-8, 9.3-10.5)
    */
   readOnlyLines: function (cm, str) {
-    debugger;
     let lines = str.split(',');
     let firstLineNumber = cm.getOption('firstLineNumber');
     lines.forEach(function (l) {
       let match = l.trim().match(/^([0-9]+)(?:\.([0-9]+))?(?:-([0-9]+)(?:\.([0-9]+))?)?$/);
       if (match) {
-        if (typeof match[2] === 'undefined') {
+        if (typeof match[3] === 'undefined') {
           let start = { line: match[1] - firstLineNumber, ch: 0 };
           let end = { line: match[1] - firstLineNumber, ch: cm.getLine(start.line).length };
-          cm.markText(start, end, { css: 'color:red' });
+          cm.markText(start, end, { readOnly: true });
         }
         else {
           match[1] = parseInt(match[1]);
@@ -121,7 +120,7 @@ CodeMirror.H5P = {
             start = { line: match[3] - firstLineNumber, ch: match[4] || 0 };
             end = { line: match[1] - firstLineNumber, ch: match[2] || cm.getLine(start.line).length };
           }
-          cm.markText(start, end, { css: 'color:red' });
+          cm.markText(start, end, { readOnly: true });
         }
       }
     });
