@@ -122,14 +122,14 @@ CodeMirror.H5P = {
           match[5] = match[5] !== undefined ? parseInt(match[5]) : undefined;
           let start, end, inclusiveLeft, inclusiveRight;
           if (match[2] < match[4]) {
-            inclusiveLeft = match[3] === undefined ? true : !(match[1] === ']');
-            inclusiveRight = match[5] === undefined ? true : !(match[6] === '[');
+            inclusiveLeft = !(match[1] === ']');
+            inclusiveRight = !(match[6] === '[');
             start = { line: match[2] - firstLineNumber, ch: match[3] || 0 };
             end = { line: match[4] - firstLineNumber, ch: match[5] || cm.getLine(start.line).length };
           }
           else {
-            inclusiveLeft = match[5] === undefined ? true : !(match[6] === ']');
-            inclusiveRight = match[3] === undefined ? true : !(match[1] === '[');
+            inclusiveLeft = !(match[6] === ']');
+            inclusiveRight = !(match[1] === '[');
             start = { line: match[4] - firstLineNumber, ch: match[5] || 0 };
             end = { line: match[2] - firstLineNumber, ch: match[3] || cm.getLine(start.line).length };
           }
