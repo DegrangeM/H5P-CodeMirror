@@ -3,7 +3,7 @@ CodeMirror.H5P = {
    * Return the library path to CodeMirror
    * @returns {string}
    */
-  getLibraryPath: function() {
+  getLibraryPath: function () {
     return H5P.getLibraryPath('CodeMirror-1.0');
   },
   /*
@@ -88,16 +88,26 @@ CodeMirror.H5P = {
       }
     });
   },
-    /**
-   * Append text at the end of the editor
-   * 
-   * @param {CodeMirror} cm
-   * @param {string} mode text to append
-   */
-  appendText: function(cm, text) {
+  /**
+ * Append text at the end of the editor
+ * 
+ * @param {CodeMirror} cm
+ * @param {string} mode text to append
+ * @param {string} [className] Optionnal class to add to the added line (only apply to lines)
+ */
+  appendText: function (cm, text, className) {
     let lastLine = cm.lastLine();
     let lastCh = cm.getLine(lastLine).length;
     cm.replaceRange(text, { line: lastLine, ch: lastCh }, { line: lastLine, ch: lastCh });
+    if (typeof className === 'string') {
+      let lastLine2 = cm.lastLine();
+      if (text[text.length - 1] === '\n') {
+        lastLine2--;
+      }
+      for (let i = lastLine; i <= lastLine2; i++) {
+        cm.addLineClass(i, 'wrap', className);
+      }
+    }
   },
   /**
    * Set the editor language to mode.
@@ -150,7 +160,7 @@ CodeMirror.H5P = {
     link.rel = 'stylesheet';
     link.type = 'text/css';
     link.href = CodeMirror.H5P.getLibraryPath() + '/theme/' + name + '.css';
-    
+
     document.getElementsByTagName('head')[0].appendChild(link);
   }
 };
