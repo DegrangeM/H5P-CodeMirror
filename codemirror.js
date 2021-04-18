@@ -92,9 +92,9 @@ CodeMirror.H5P = {
    * Append text at the end of the editor
    * 
    * @param {CodeMirror} cm
-   * @param {string} mode text to append
+   * @param {string} text text to append
    */
-  appendText: function (cm, text, className) {
+  appendText: function (cm, text) {
     let lastLine = cm.lastLine();
     let lastCh = cm.getLine(lastLine).length;
     cm.replaceRange(text, { line: lastLine, ch: lastCh }, { line: lastLine, ch: lastCh });
@@ -104,6 +104,36 @@ CodeMirror.H5P = {
         lastLine2--;
       }
       for (let i = lastLine; i <= lastLine2; i++) {
+        cm.addLineClass(i, 'wrap', className);
+      }
+    }
+  },
+  /**
+ * Append lines at the end of the editor.
+ * Will make sure the text is added on a new line and that there is a line at the end.
+ * Can optionaly add a class to the added lines
+ * 
+ * @param {CodeMirror} cm
+ * @param {string} text text to append
+ * @param {string} [className] Optionnal class to add to the added line (only apply to lines)
+ */
+  appendLines: function (cm, text, className) {
+    let lastLine = cm.lastLine();
+    let lastCh = cm.getLine(lastLine).length;
+    if (text[text.length - 1] === '\n') {
+      text += '\n';
+    }
+    if (cm.getLine(lastLine) !== '\n') {
+      cm.replaceRange('\n' + text, { line: lastLine, ch: lastCh }, { line: lastLine, ch: lastCh });
+      lastLine++;
+      lastCh = 0; // not currently used
+    }
+    else {
+      cm.replaceRange(text, { line: lastLine, ch: lastCh }, { line: lastLine, ch: lastCh });
+    }
+    if (typeof className === 'string') {
+      let lastLine2 = cm.lastLine();
+      for (let i = lastLine; i < lastLine2; i++) { // strict inequality to ignore last empty line
         cm.addLineClass(i, 'wrap', className);
       }
     }
