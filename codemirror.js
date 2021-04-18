@@ -109,7 +109,7 @@ CodeMirror.H5P = {
     }
   },
   /**
- * Append lines at the end of the editor.
+ * Append line(s) at the end of the editor.
  * Will make sure the text is added on a new line and that there is a line at the end.
  * Can optionaly add a class to the added lines
  * 
@@ -119,11 +119,12 @@ CodeMirror.H5P = {
  */
   appendLines: function (cm, text, className) {
     let lastLine = cm.lastLine();
+    let lastLineText = cm.getLine(lastLine);
     let lastCh = cm.getLine(lastLine).length;
-    if (text[text.length - 1] === '\n') {
+    if (text[text.length - 1] !== '\n') {
       text += '\n';
     }
-    if (cm.getLine(lastLine) !== '\n') {
+    if (lastLineText !== '') {
       cm.replaceRange('\n' + text, { line: lastLine, ch: lastCh }, { line: lastLine, ch: lastCh });
       lastLine++;
       lastCh = 0; // not currently used
