@@ -73,7 +73,7 @@ CodeMirror.H5P = {
     let lines = str.split(',');
     let firstLineNumber = cm.getOption('firstLineNumber');
     lines.forEach(function (l) {
-      let match = l.trim().match('^([0-9]+)(?:-([0-9]+))?$');
+      let match = l.trim().match(/^([0-9]+)(?:-([0-9]+))?$/);
       if (match) {
         if (typeof match[2] === 'undefined') {
           cm.addLineClass(parseInt(match[1] - firstLineNumber), 'background', 'CodeMirror-highlightedline');
@@ -84,6 +84,44 @@ CodeMirror.H5P = {
           for (let i = start; i <= end; i++) {
             cm.addLineClass(i - firstLineNumber, 'background', 'CodeMirror-highlightedline');
           }
+        }
+      }
+    });
+  },
+  /**
+   * Allow to set somes lines (or sections of lines) as read-only.
+   * 
+   * @param {CodeMirror} cm The instance of CodeMirror that will be highlighted
+   * @param {string} str The lines to set as read-only. Separate lines by comma, use hyphen
+   * to indicate range eventually with a dot for character position (e.g. 1,3,5-8, 9.3-10.5)
+   */
+  readOnlyLines: function (cm, str) {
+    debugger;
+    let lines = str.split(',');
+    let firstLineNumber = cm.getOption('firstLineNumber');
+    lines.forEach(function (l) {
+      let match = l.trim().match(/^([0-9]+)(?:\.([0-9]+))?(?:-([0-9]+)(?:\.([0-9]+))?)?$/);
+      if (match) {
+        if (typeof match[2] === 'undefined') {
+          let start = { line: match[1] - firstLineNumber, ch: 0 };
+          let end = { line: match[1] - firstLineNumber, ch: cm.getLine(start.line).length };
+          cm.markText(start, end, { css: 'color:red' });
+        }
+        else {
+          match[1] = parseInt(match[1]);
+          match[2] = parseInt(match[2]);
+          match[3] = parseInt(match[3]);
+          match[4] = parseInt(match[4]);
+          let start, end;
+          if (match[1] < match[3]) {
+            start = { line: match[1] - firstLineNumber, ch: match[2] || 0 };
+            end = { line: match[3] - firstLineNumber, ch: match[4] || cm.getLine(start.line).length };
+          }
+          else {
+            start = { line: match[3] - firstLineNumber, ch: match[4] || 0 };
+            end = { line: match[1] - firstLineNumber, ch: match[2] || cm.getLine(start.line).length };
+          }
+          cm.markText(start, end, { css: 'color:red' });
         }
       }
     });
