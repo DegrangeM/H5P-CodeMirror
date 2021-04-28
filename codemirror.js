@@ -241,7 +241,7 @@ CodeMirror.H5P = {
     let link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
-    link.href = CodeMirror.H5P.getLibraryPath() + '/theme/' + name + '.css';
+    link.href = CodeMirror.H5P.getPath('theme/' + name + '.css');
 
     document.getElementsByTagName('head')[0].appendChild(link);
   }
