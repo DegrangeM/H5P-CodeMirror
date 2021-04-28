@@ -1,10 +1,12 @@
 CodeMirror.H5P = {
   /**
-   * Return the library path to CodeMirror
+   * Return the path to a file from CodeMirror library
    * @returns {string}
    */
-  getLibraryPath: function () {
-    return H5P.getLibraryPath('CodeMirror-1.0');
+  getPath: function (filePath) {
+    // return H5P.getLibraryPath('CodeMirror-1.0');
+    // Compatibility with Lumi
+    return H5P.ContentType().prototype.getLibraryFilePath.call({ libraryInfo: { versionedNameNoSpaces: 'CodeMirror-1.0' } }, filePath);
   },
   /*
       By default, when a content-type fetch the value of a text field,
@@ -216,7 +218,7 @@ CodeMirror.H5P = {
         // set the mode to the value passed in argument, this has
         // to be done before.
         path: function (mode) { // path is safe because mode is from modeInfo.mime
-          return CodeMirror.H5P.getLibraryPath() + '/mode/' + mode + '/' + mode + '.js';
+          return CodeMirror.H5P.getPath('mode/' + mode + '/' + mode + '.js');
         }
       });
     }
