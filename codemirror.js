@@ -96,8 +96,9 @@ CodeMirror.H5P = {
    * @param {CodeMirror} cm The instance of CodeMirror that will be highlighted
    * @param {string} str The lines to set as read-only. Separate lines by comma, use hyphen
    * to indicate range eventually with a dot for character position (e.g. 1,3,5-8, 9.3-10.5)
+   * @param {string} [className] Optionnal class name to apply to affected text
    */
-  readOnlyLines: function (cm, str) {
+  readOnlyLines: function (cm, str, className) {
     let lines = str.split(',');
     let firstLineNumber = cm.getOption('firstLineNumber');
     lines.forEach(function (l) {
@@ -113,9 +114,9 @@ CodeMirror.H5P = {
       let match = l.trim().match(/^(\[|\])?([0-9]+)(?:\.([0-9]+))?(?:-([0-9]+)(?:\.([0-9]+))?(\[|\])?)?$/);
       if (match) {
         if (typeof match[4] === 'undefined') {
-          let start = { line: match[1] - firstLineNumber, ch: 0 };
-          let end = { line: match[1] - firstLineNumber, ch: cm.getLine(start.line).length };
-          cm.markText(start, end, { readOnly: true, inclusiveLeft: true, inclusiveRight: true });
+          let start = { line: match[2] - firstLineNumber, ch: 0 };
+          let end = { line: match[2] - firstLineNumber, ch: cm.getLine(start.line).length };
+          cm.markText(start, end, { readOnly: true, inclusiveLeft: true, inclusiveRight: true, className });
         }
         else {
           match[2] = parseInt(match[2]);
@@ -135,7 +136,7 @@ CodeMirror.H5P = {
             start = { line: match[4] - firstLineNumber, ch: match[5] || 0 };
             end = { line: match[2] - firstLineNumber, ch: match[3] || cm.getLine(start.line).length };
           }
-          cm.markText(start, end, { readOnly: true, inclusiveLeft: inclusiveLeft, inclusiveRight: inclusiveRight });
+          cm.markText(start, end, { readOnly: true, inclusiveLeft: inclusiveLeft, inclusiveRight: inclusiveRight, className });
         }
       }
     });
